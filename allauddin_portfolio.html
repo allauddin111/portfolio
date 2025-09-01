@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Allauddin Khan — Software Engineer</title>
+  <meta name="description" content="Portfolio of Allauddin Khan Jamkhanewale — Software Engineer." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --bg-soft: #0f1520;
+      --text: #e6edf3;
+      --muted: #9fb0c0;
+      --primary: #5de4c7; /* mint */
+      --accent: #8ab4ff; /* blue */
+      --ring: #5de4c766;
+      --card: #0f1520;
+      --border: #1b2635;
+      --shadow: 0 20px 40px rgba(0,0,0,.45);
+      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    /* THEME VARIANTS */
+    /* 1) "BC" — Sidebar + numbered sections (inspired by Brittany Chiang v4) */
+    [data-theme="bc"] {
+      --primary: #5de4c7; --accent: #8ab4ff; --bg: #0b0f14; --bg-soft:#0f1520; --card:#0f1520; --border:#1b2635;
+    }
+    /* 2) "LR" — Minimal editorial + big type (inspired by Lee Robinson) */
+    [data-theme="lr"] {
+      --primary: #7c3aed; --accent:#facc15; --bg:#0a0a0a; --bg-soft:#111; --card:#111; --border:#222; --text:#fafafa; --muted:#bdbdbd;
+    }
+    /* 3) "JC" — Playful gradients + subtle motion (inspired by Josh Comeau) */
+    [data-theme="jc"] {
+      --primary: #22d3ee; --accent:#fb7185; --bg:#070a12; --bg-soft:#0a1020; --card:#0a1020; --border:#14213d; --text:#f3f5f7; --muted:#b1bed1;
+    }
+
+    * { box-sizing: border-box }
+    html, body { height: 100% }
+    body { margin: 0; font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.6; }
+    a { color: var(--primary); text-decoration: none }
+    a:hover { text-decoration: underline }
+    img { max-width: 100%; display: block }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+    /* Header */
+    header.site { position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(140%) blur(10px); background: color-mix(in oklab, var(--bg-soft) 80%, transparent); border-bottom: 1px solid var(--border); }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { font-weight: 800; letter-spacing: -0.02em; }
+    .brand small { font-weight: 500; color: var(--muted) }
+    .nav a { padding: 10px 12px; border-radius: 10px; }
+    .nav a:focus-visible { outline: 3px solid var(--ring) }
+    .nav .social a { opacity: .8 }
+
+    /* Layout variants */
+    .grid { display: grid; gap: 24px; }
+    @media (min-width: 980px) {
+      .layout-bc { grid-template-columns: 320px 1fr; align-items: start; }
+    }
+
+    aside.sidebar { position: sticky; top: 80px; align-self: start; display: grid; gap: 18px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; box-shadow: var(--shadow); }
+    .card.pad { padding: 18px; }
+
+    .avatar { width: 120px; height: 120px; border-radius: 100%; border: 3px solid var(--border); box-shadow: 0 10px 20px #0006; }
+
+    h1.hero { font-size: clamp(28px, 6vw, 56px); line-height: 1.05; margin: 0 0 10px 0; letter-spacing: -0.02em; }
+    .subtitle { font-size: clamp(16px, 2.2vw, 20px); color: var(--muted); margin: 0 0 22px; }
+
+    .chip { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border:1px solid var(--border); border-radius:999px; background:linear-gradient(180deg, color-mix(in oklab, var(--card) 70%, transparent), color-mix(in oklab, var(--bg-soft) 30%, transparent)); font: 500 12px var(--mono); color: var(--muted); }
+
+    .section { padding: 24px; border: 1px solid var(--border); border-radius: 18px; background: linear-gradient(180deg, color-mix(in oklab, var(--card) 85%, transparent), color-mix(in oklab, var(--bg-soft) 15%, transparent)); box-shadow: var(--shadow); }
+    .section + .section { margin-top: 18px; }
+
+    .numtitle { display:flex; align-items:center; gap:12px; letter-spacing: -0.01em; margin: 0 0 16px; }
+    .numtitle .num { font: 900 14px var(--mono); color: var(--accent); padding: 6px 10px; border: 1px dashed var(--border); border-radius: 8px; }
+    .numtitle h2 { font-size: clamp(20px, 3vw, 28px); margin: 0 }
+
+    /* Experience timeline */
+    .timeline { position: relative; margin-left: 6px }
+    .timeline::before { content:""; position:absolute; left:9px; top:0; bottom:0; width:2px; background: linear-gradient(180deg, var(--border), color-mix(in oklab, var(--accent) 20%, var(--border))); }
+    .item { position: relative; padding-left: 34px; margin: 0 0 18px; }
+    .item::marker { content: none }
+    .dot { position:absolute; left:0; top:.45rem; width:18px; height:18px; border-radius:50%; background: var(--bg); border: 2px solid var(--accent); box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 30%, transparent); }
+    .role { display:flex; flex-wrap:wrap; align-items:baseline; gap:10px; }
+    .role .at { color: var(--primary); font-weight: 700 }
+    .meta { font: 600 12px var(--mono); color: var(--muted); }
+
+    /* Projects grid */
+    .projects { display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .project { position: relative; padding: 18px; border-radius: 14px; border: 1px solid var(--border); background: linear-gradient(180deg, color-mix(in oklab, var(--card) 60%, transparent), color-mix(in oklab, var(--bg-soft) 40%, transparent)); transition: transform .2s ease, box-shadow .2s ease; }
+    .project:hover { transform: translateY(-4px); box-shadow: 0 14px 30px #0006 }
+    .project h3 { margin: 0 0 8px; font-size: 18px }
+    .project p { margin: 0 0 10px; color: var(--muted) }
+    .tags { display:flex; gap:8px; flex-wrap: wrap }
+    .tag { font:600 11px var(--mono); border:1px solid var(--border); padding:4px 8px; border-radius:999px; color: var(--muted) }
+
+    /* Footer */
+    footer { padding: 40px 24px; text-align: center; color: var(--muted); border-top: 1px solid var(--border); margin-top: 40px; }
+
+    /* Utilities */
+    .row { display:flex; gap: 14px; align-items:center }
+    .row.wrap { flex-wrap: wrap }
+    .space { flex: 1 }
+    .btn { display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius: 12px; border: 1px solid var(--border); background: color-mix(in oklab, var(--card) 80%, transparent); font-weight: 600 }
+    .btn:hover { box-shadow: 0 10px 20px #0007; transform: translateY(-1px) }
+
+    /* Reveal on scroll */
+    [data-reveal] { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
+    [data-reveal].visible { opacity: 1; transform: none }
+
+    /* Responsive tweaks */
+    @media (max-width: 979px) { .layout-bc { grid-template-columns: 1fr } header.site { position: sticky } }
+
+    /* Accent gradient header for JC */
+    [data-theme="jc"] .hero-gradient { position: absolute; inset: -20vh -20vw auto -20vw; height: 45vh; z-index: -1; background: radial-gradient(50% 50% at 50% 50%, color-mix(in oklab, var(--primary) 40%, transparent), transparent 60%), radial-gradient(60% 60% at 70% 30%, color-mix(in oklab, var(--accent) 30%, transparent), transparent 60%); filter: blur(40px); opacity: .55 }
+  </style>
+</head>
+<body data-theme="bc">
+  <header class="site">
+    <div class="container nav">
+      <div class="row">
+        <strong class="brand">Allauddin Khan <small>— Software Engineer</small></strong>
+        <span class="chip" id="locationChip" aria-live="polite">India · IST</span>
+      </div>
+      <nav class="row wrap">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <div class="space"></div>
+        <select id="theme" class="btn" aria-label="Switch visual style">
+          <option value="bc">Style: Sidebar (BC)</option>
+          <option value="lr">Style: Editorial (LR)</option>
+          <option value="jc">Style: Gradient (JC)</option>
+        </select>
+        <a class="btn" href="https://github.com/new" target="_blank" rel="noreferrer">Deploy to GitHub Pages →</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container grid layout-bc" id="content">
+    <aside class="sidebar" aria-label="Profile sidebar">
+      <div class="card pad" data-reveal>
+        <img class="avatar" src="https://avatars.githubusercontent.com/u/9919?s=200&v=4" alt="Avatar placeholder" />
+        <h1 class="hero">Hi, I'm Allauddin.</h1>
+        <p class="subtitle">I build fast, accessible web apps with Vue, React, and good old HTML/CSS/JS.</p>
+        <div class="row wrap">
+          <a class="btn" href="#projects">View Projects</a>
+          <a class="btn" href="#contact">Contact Me</a>
+        </div>
+      </div>
+      <div class="card pad" data-reveal>
+        <h3 style="margin:0 0 10px">Tech</h3>
+        <div class="row wrap">
+          <span class="tag">Java</span><span class="tag">SQL</span><span class="tag">Vue</span><span class="tag">React</span><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Flutter</span>
+        </div>
+      </div>
+      <div class="card pad" data-reveal>
+        <h3 style="margin:0 0 10px">Links</h3>
+        <div class="row wrap">
+          <a class="btn" href="#" aria-label="GitHub">GitHub</a>
+          <a class="btn" href="#" aria-label="LinkedIn">LinkedIn</a>
+          <a class="btn" href="#" aria-label="X / Twitter">X</a>
+          <a class="btn" href="#" aria-label="Email">Email</a>
+        </div>
+      </div>
+    </aside>
+
+    <section class="stack">
+      <section id="about" class="section" data-reveal>
+        <div class="numtitle"><span class="num">01</span><h2>About</h2></div>
+        <p>I’m a software engineer focused on building delightful, resilient UIs. I’ve shipped dashboards, widgets, and data visualizations at scale, with an emphasis on performance and clear UX.</p>
+        <p class="chip">Open to SDE2 roles · Bengaluru / Remote</p>
+      </section>
+
+      <section id="experience" class="section" data-reveal>
+        <div class="numtitle"><span class="num">02</span><h2>Experience</h2></div>
+        <ol class="timeline" aria-label="Experience timeline">
+          <li class="item">
+            <span class="dot" aria-hidden="true"></span>
+            <div class="role"><strong>Senior Frontend Engineer</strong> <span class="at">@ Acme</span></div>
+            <div class="meta">2023 — Present · Bengaluru</div>
+            <ul>
+              <li>Built visualization system with donut, bar, and column charts powering PLMA dashboards.</li>
+              <li>Reduced bundle size 28% via code-splitting and image optimizations.</li>
+            </ul>
+          </li>
+          <li class="item">
+            <span class="dot" aria-hidden="true"></span>
+            <div class="role"><strong>Frontend Engineer</strong> <span class="at">@ Beta Corp</span></div>
+            <div class="meta">2021 — 2023 · Pune</div>
+            <ul>
+              <li>Rebuilt component library with Vue 3 + Vite; shipped 40+ reusable components.</li>
+              <li>Led accessibility push to WCAG AA; audited 100+ views.</li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+
+      <section id="projects" class="section" data-reveal>
+        <div class="numtitle"><span class="num">03</span><h2>Selected Projects</h2></div>
+        <div class="projects">
+          <article class="project">
+            <h3>Deliverables DP</h3>
+            <p>Data platform to track test specs, cases, and execution with charts and drilldowns.</p>
+            <div class="tags"><span class="tag">Vue</span><span class="tag">PrimeVue</span><span class="tag">Postgres</span></div>
+          </article>
+          <article class="project">
+            <h3>Opportunity Intake</h3>
+            <p>Workflow to evaluate new business with overview & details pages and governance filters.</p>
+            <div class="tags"><span class="tag">React</span><span class="tag">Node</span><span class="tag">REST</span></div>
+          </article>
+          <article class="project">
+            <h3>PLMA Engineer Dashboard</h3>
+            <p>Lets engineers see assignments and progress at a glance with clean widgets.</p>
+            <div class="tags"><span class="tag">Vue</span><span class="tag">D3</span><span class="tag">SQL</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact" class="section" data-reveal>
+        <div class="numtitle"><span class="num">04</span><h2>Contact</h2></div>
+        <p>Have an opportunity or want to collaborate? I’m open to interesting problems.</p>
+        <div class="row wrap">
+          <a class="btn" href="mailto:you@example.com">you@example.com</a>
+          <a class="btn" href="#">Download Resume (PDF)</a>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Allauddin Khan. Built with HTML, CSS & JS. Switch styles from the top-right.</div>
+  </footer>
+
+  <div class="hero-gradient" aria-hidden="true"></div>
+
+  <script>
+    // Live year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Fake location chip (you can replace with your city)
+    const chip = document.getElementById('locationChip');
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Kolkata';
+    const tzShort = new Date().toLocaleTimeString('en-US', { timeZoneName: 'short' }).split(' ').pop();
+    chip.textContent = tz.replace('_',' ') + ' · ' + tzShort;
+
+    // Reveal on scroll
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+
+    // Theme switcher (bc / lr / jc)
+    const theme = document.getElementById('theme');
+    const root = document.body;
+    function setTheme(v){ root.setAttribute('data-theme', v); localStorage.setItem('theme', v); }
+    theme.addEventListener('change', e => setTheme(e.target.value));
+    // Load saved
+    const saved = localStorage.getItem('theme'); if(saved){ theme.value = saved; setTheme(saved); }
+
+    // Optional: Smooth scroll for same-page anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      });
+    });
+  </script>
+</body>
+</html>
